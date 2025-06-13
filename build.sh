@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 
-ghc --make -outputdir out main.hs -o main.bin
+# Supposedly this is "better" than doing a makefile
+ghc --make -Wall -outputdir out main.hs -o main.bin
 
