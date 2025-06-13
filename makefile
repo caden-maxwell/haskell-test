@@ -6,8 +6,8 @@ TARGET := main.bin
 
 .PHONY: run clean
 
-run:
-	./$(TARGET)
+run: $(TARGET)
+	./$<
 
 $(TARGET): $(OBJS)
 	$(GHC) $? -o $@
