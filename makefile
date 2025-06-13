@@ -1,19 +1,24 @@
 GHC := ghc
-SOURCES := main.hs
-OBJS := $(SOURCES:.hs=.o)
+BUILD_DIR := build
+SOURCES := $(wildcard *.hs)
+OBJS    := $(patsubst %.hs,$(BUILD_DIR)/%.o,$(SOURCES))
 GHCFLAGS := -Wall
 TARGET := main.bin
+
+# Only build by default
+$(TARGET): $(OBJS)
+	$(GHC) $? -o $@
+
+$(BUILD_DIR)/%.o: %.hs | $(BUILD_DIR)
+	$(GHC) $(GHCFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 .PHONY: run clean
 
 run: $(TARGET)
 	./$<
 
-$(TARGET): $(OBJS)
-	$(GHC) $? -o $@
-
-%.o: %.hs
-	$(GHC) $(GHCFLAGS) -c $< -o $@
-
 clean:
-	rm -f *.o *.hi $(TARGET)
+	rm -rf $(TARGET) $(BUILD_DIR)
