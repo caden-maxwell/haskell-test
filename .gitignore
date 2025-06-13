@@ -1,5 +1,4 @@
 build
 *.o
 *.hi
-*.hie
 *.bin
